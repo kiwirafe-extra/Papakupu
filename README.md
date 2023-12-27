@@ -2,7 +2,7 @@
 
 This is a school project that uses Flask to serve a Māori Dictionary.
 
-### Feature:
+### Features:
 #### Student-side:
 - Display relevant information of a word.
 - Search for a Māori word.
@@ -11,8 +11,7 @@ This is a school project that uses Flask to serve a Māori Dictionary.
 - Add, delete and modify words.
 - Add, delete and modify categories.
 #### Others:
-- Sign up.
-- Login.
+- Sign up and login.
 
-### Extra Information
+### Extra Information:
 - This project is built entirely on `Flask` + `SQLite`.
