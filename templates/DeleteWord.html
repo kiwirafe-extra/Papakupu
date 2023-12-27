@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <title>Delete Confirm</title>
+        <style>
+            .container {
+                margin-top: 100px;
+            }
+        </style>
+    {% endblock %}
+</head>
+<body>
+    {% block body %}
+        <div class="container">
+            <!--This page allows the user to delete a word-->
+            <form id="form" action="{{ url_for('delete_word') }}" method="post">
+                <h3>Please confirm you are deleting this <a href="{{ url_for('show_word', word_id=session['DeleteWord_temp']) }}">word</a>.<br>
+                    <br>This action is not revertable: <br>
+                <a href="javascript: document.getElementById('form').submit();">Yes</a> / <a href="{{ url_for('words', cat_id='all') }}">No</a></h3>
+            </form>
+        </div>
+    {% endblock %}
+</body>
+</html>

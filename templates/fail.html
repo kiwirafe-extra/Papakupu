@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <title>Fail</title>
+        <style>
+            .container {
+                margin-top: 100px;
+            }
+        </style>
+    {% endblock %}
+</head>
+<body>
+    {% block body %}
+        <div class="container">
+            <!--This page shows that the process is unsuccessful and advises the user to try again-->
+            <h3>Your process was unsuccessful. Please refresh to page and try again</h3>
+        </div>
+    {% endblock %}
+</body>
+</html>

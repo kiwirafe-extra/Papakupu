@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Title</title>
+    </head>
+    <body>
+        {% block body %}
+        <div class="container">
+            <!--
+                This page allows the user to add a word
+                It collect information such as the maori word, translation and image
+            -->
+            <form class="needs-validation" action="{{ url_for('add_word') }}" method="post" enctype="multipart/form-data" novalidate>
+                <div class="card">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img id="show" height="312" width="100%" src="{{ url_for('static', filename=('download.png')) }}" alt="...">
+                            <div class="custom-file"> <!--Allows the user to upload an image-->
+                                <input type="file" class="custom-file-input" id="image" name="image" onchange="javascript:ShowImage()" accept="image/*" required>
+                                <label class="custom-file-label" for="image" style="text-align: left">
+                                    Select an image for this word
+                                </label>
+                                <div class="invalid-feedback">Please a valid image suitable for this word</div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title mb-3">Please fill the form below</h5>
+                                <div class="form-row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="maoriword">Maori Word</label>
+                                        <input type="text" class="form-control {% if error %}is-invalid{% endif %}" id="maoriword" name="maoriword" placeholder="Kia Ora" maxlength="100" required>
+                                        <div class="invalid-feedback">
+                                            {% if error %}
+                                                A Maori word with the same English translation already exists.
+                                            {% else %}
+                                                Please fill this
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="englishword">English Word</label>
+                                        <input type="text" class="form-control" id="englishword" name="englishword" placeholder="Hello" maxlength="100" required>
+                                        <div class="invalid-feedback">Please fill this</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Short Description</label>
+                                    <textarea class="form-control" id="description" name="description" rows="3" maxlength="300" required></textarea>
+                                    <div class="invalid-feedback">Please fill this</div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <label for="level">Level</label>
+                                        <input type="number" class="form-control" id="level" name="level" min="1" max="10" required>
+                                        <div class="invalid-feedback">Level must be between 1 and 10.</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="category">Category</label>
+                                        <select class="custom-select" id="category" name="category" required>
+                                            {% for id, category in categories %}
+                                                <option value="{{ id }}" >{{ category }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-block btn-success" type="submit">
+                    Add Word
+                </button>
+            </form>
+        </div>
+        <script>
+            // Show user the image after they upload it.
+            function ShowImage() {
+                const file = document.getElementById("image").files[0]
+                if (file) {
+                    document.getElementById("show").src = URL.createObjectURL(file)
+                }
+                var FileName = document.getElementById("image").value;
+                $('label[for="image"]').html(FileName);
+            }
+        </script>
+    {% endblock %}
+    </body>
+</html>

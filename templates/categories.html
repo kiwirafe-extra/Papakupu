@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        {% block head %}
+        <title>Words</title>
+            <style>
+                #row {
+                    margin-left: 50px;
+                    margin-right: 50px;
+                }
+            </style>
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}
+        <div class="container">
+            <!-- This shows all the categories -->
+            {% if 'teacher' in session %}
+            <div class="d-flex justify-content-end">
+                <a class="btn btn-primary" href="{{ url_for('add_cat') }}">Add Category</a>
+            </div>
+            {% endif %}
+            <div class="tab-content" id="v-pills-content">
+                <div class="tab-pane fade show active" id="v-all" role="tabpanel">
+                    <div class="row row-cols-1 row row-cols-md-2">
+                        {% for id, category, number in categories %}
+                            <div class="col mb-4">
+                                <div class="card bg-light h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <a href="{{ url_for('words', cat_id=id) }}">{{ category }}</a>
+                                        </h5>
+                                        <p class="card-text">{{ number }} words under this category.</p>
+                                    </div>
+                                    {% if 'teacher' in session %}
+                                        <div class="card-footer">
+                                            <a href="{{ url_for('modify_cat', cat_id=id) }}">Modify</a> | <a href="{{ url_for('delete_cat', cat_id=id) }}">Delete</a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </body>
+</html>

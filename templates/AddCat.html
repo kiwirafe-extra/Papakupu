@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <title>Add Category</title>
+    {% endblock %}
+</head>
+<body>
+    {% block body %}
+        <div class="container">
+            <!--This page allows the user to add a category-->
+            <h2 style="margin-top: 50px">Add Category</h2>
+            <form class="needs-validation" action="{{ url_for('add_cat') }}" method="POST" novalidate>
+                <div class="input-group has-validation">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Add</span>
+                    </div>
+                    <input type="text" class="form-control {% if error %}is-invalid{% endif %}" name="add" placeholder="Action" required>
+                    <div class="invalid-feedback">
+                        {% if error %} <!--Show the error if needed-->
+                            Category already exist.
+                        {% else %}
+                            Please fill this!
+                        {% endif %}
+                    </div>
+                </div>
+                <button class="btn btn-block btn-success" type="submit">Add</button>
+            </form>
+
+        </div>
+    {% endblock %}
+</body>
+</html>

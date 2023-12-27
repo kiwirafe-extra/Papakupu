@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <title>Show Word</title>
+    {% endblock %}
+</head>
+<body>
+    {% block body %}
+        <div class="container">
+            <!-- This page shows the detail of the words-->
+            <div class="card">
+                <div class="row no-gutters">
+                    <div class="col-md-5">
+                        {% if word[6] %}
+                            <img src="{{ url_for('static', filename=('images/' + word[6])) }}" class="card-img-top" height="300">
+                        {% else %}
+                            <img src="{{ url_for('static', filename=('images/default.jpg')) }}" class="card-img-top" height="300">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ word[1] }}<br>{{ word[2] }}</h3>
+                            <p class="card-text">{{ word[3] }}</p>
+                            <p class="card-text">Level: {{ word[4] }} <br> Category: {{ word[5] }}</p>
+                            <p class="card-text">Date of Entry: {{ word[7] }} <br> User of Entry: {{ word[8] }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% if 'teacher' in session %}
+                    <div class="card-footer">
+                        <a href="{{ url_for('modify_word', word_id=word[0]) }}">Modify</a> | <a href="{{ url_for('delete_word', word_id=word[0]) }}">Delete</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endblock %}
+</body>
+</html>

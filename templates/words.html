@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        {% block head %}
+        <title>Words</title>
+            <style>
+                #row {
+                    margin-left: 50px;
+                    margin-right: 50px;
+                }
+            </style>
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}
+        <div class="container-fluid">
+            <!-- This page shows all the words-->
+            <div class="row" id="row">
+                <div class="col-md-3">
+                    <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical" id="v-tabs">
+                        <a class="nav-link" type="button" role="tab" href="{{ url_for('words', cat_id='all') }}">All</a>
+                        {% for id, category in categories %}
+                            <a class="nav-link" type="button" role="tab" href="{{ url_for('words', cat_id=id) }}">{{ category }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    {% if 'teacher' in session %}
+                    <div class="d-flex justify-content-end">
+                        <a class="btn btn-primary" href="{{ url_for('add_word') }}">Add Word</a>
+                    </div>
+                    {% endif %}
+                    <div class="tab-content" id="v-pills-content">
+                        <div class="tab-pane fade show active" id="v-all" role="tabpanel">
+                            <div class="row row-cols-1 row-cols-lg-2">
+                                {% for id, maori, english, description in words_list %}
+                                    <div class="col mb-4">
+                                        <div class="card bg-light h-100 ">
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <a href="{{ url_for('show_word', word_id=id) }}">{{ maori }}</a>
+                                                    <br>{{ english }}</h5>
+                                                    <p class="card-text">{{ description }}</p>
+                                            </div>
+                                            {% if 'teacher' in session %}
+                                                <div class="card-footer">
+                                                    <a href="{{ url_for('modify_word', word_id=id) }}">Modify</a> | <a href="{{ url_for('delete_word', word_id=id) }}">Delete</a>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </body>
+</html>

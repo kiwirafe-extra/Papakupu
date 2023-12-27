@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <title>Please Login</title>
+        <style>
+            .container {
+                margin-top: 100px;
+            }
+        </style>
+    {% endblock %}
+</head>
+<body>
+    {% block body %}
+        <div class="container">
+            <!-- If the user is not the teacher, this page will be displayed-->
+            <h2>You do not have access to this.
+                Either <a href="{{ url_for('login') }}">Login</a> or <a href="{{ url_for('signup') }}">Signup</a> as a teacher to start your actions.</h2>
+        </div>
+    {% endblock %}
+</body>
+</html>

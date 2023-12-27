@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <title>Modify Category</title>
+    {% endblock %}
+</head>
+<body>
+    {% block body %}
+        <div class="container">
+            <!--This page allows the user to modify a category, ie change the name of the category-->
+            <h2 style="margin-top: 50px">Modify Category</h2>
+            <form class="needs-validation" action="{{ url_for('modify_cat', cat_id=category[0]) }}" method="POST" novalidate>
+                <div class="input-group has-validation">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Modify</span>
+                    </div>
+                    <input type="text" class="form-control" name="modify" value="{{ category[1] }}" required>
+                    <div class="invalid-feedback">Please fill this!</div>
+                </div>
+                <button class="btn btn-block btn-success" type="submit">Modify</button>
+            </form>
+
+        </div>
+    {% endblock %}
+</body>
+</html>

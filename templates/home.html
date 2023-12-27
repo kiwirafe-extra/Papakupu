@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<head>
+    {% block head %}
+        <title>Māori Dictionary</title>
+        {% if not words_list and words_list != -1 %}
+        <style>
+            .container {
+                margin-top: 100px;
+            }
+        </style>
+        {% endif %}
+    {% endblock %}
+</head>
+<body>
+    {% block body %}
+        <div class="container">
+            <!--This page allows the user to search a word-->
+            {% if not words_list and words_list != -1 %}
+                <h1>Māori Dictionary</h1><br>
+            {% endif %}
+            <form action="{{ url_for('home') }}" method="POST">
+                <div class="input-group input-group-lg">
+                    <input type="text" class="form-control" placeholder="Start Searching Here" aria-label="Search" name="searchbox" id="searchbox">
+                    <div class="input-group-append">
+                        <button class="btn btn-success" type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-6">
+                    <button class="btn btn-block btn-primary" type="button" data-toggle="collapse" data-target="#macrons" aria-expanded="false" aria-controls="macrons">
+                        Māori Macrons
+                    </button>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-block btn-primary" type="button" onclick="document.getElementById('searchbox').value = ''">
+                        Clear Searchbar
+                    </button>
+                </div>
+            </div>
+            <div class="collapse" id="macrons">
+                <div class="card card-body">
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-outline-info" type="button" onclick="AddMacron('ā');">ā</button>
+                        <button class="btn btn-outline-info" type="button" onclick="AddMacron('ē');">ē</button>
+                        <button class="btn btn-outline-info" type="button" onclick="AddMacron('ī');">ī</button>
+                        <button class="btn btn-outline-info" type="button" onclick="AddMacron('ō');">ō</button>
+                        <button class="btn btn-outline-info" type="button" onclick="AddMacron('ū');">ū</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Shows the word if found -->
+            <div class="tab-content mt-3" id="v-pills-content">
+                <div class="tab-pane fade show active" id="v-all" role="tabpanel">
+                    <div class="row row-cols-1">
+                        {% if words_list == -1 %}
+                            <h5>No results found</h5>
+                        {% else %}
+                            {% for id, maori, english, description in words_list %}
+                                <div class="col mb-4">
+                                    <div class="card bg-light h-100 ">
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <a href="{{ url_for('show_word', word_id=id) }}">{{ maori }}</a>
+                                                <br>{{ english }}</h5>
+                                                <p class="card-text">{{ description }}</p>
+                                        </div>
+                                        {% if 'teacher' in session %}
+                                            <div class="card-footer">
+                                                <a href="{{ url_for('modify_word', word_id=id) }}">Modify</a> | <a href="{{ url_for('delete_word', word_id=id) }}">Delete</a>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function AddMacron(macron) {
+                document.getElementById('searchbox').value += macron;
+            }
+        </script>
+    {% endblock %}
+</body>
+</html>
